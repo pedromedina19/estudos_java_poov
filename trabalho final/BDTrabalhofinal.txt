@@ -1,0 +1,51 @@
+create database trabfinal;
+
+use trabfinal;
+
+CREATE TABLE IF NOT EXISTS CLIENTES(
+	cpf VARCHAR(20) PRIMARY KEY,
+	nome VARCHAR(255),
+	telefone VARCHAR(15),
+	endereco VARCHAR(255),
+	end_instagram VARCHAR(255),
+	end_facebook VARCHAR(255),
+	cartaoDeCredito VARCHAR(15)
+);
+
+CREATE TABLE IF NOT EXISTS CHOCOLATE(
+	id_chocolate VARCHAR(100) PRIMARY KEY,
+	peso double,
+	valorPorKg double,
+	tipoDoChocolate VARCHAR(50),
+	valorDeVenda double,
+	temperaturaIdeal int,
+    	qtdeDeLeite double
+);
+
+CREATE TABLE IF NOT EXISTS PEDIDO(
+	id_pedido int auto_increment PRIMARY KEY,
+	datadopedido DateTime,
+	prazoParaEntrega DateTime,
+	fk_cpf VARCHAR(20),
+	CONSTRAINT fk_cpf
+      FOREIGN KEY(fk_cpf) 
+	  REFERENCES CLIENTES(cpf) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS CHOCOLATE_PEDIDO(
+	id_chocolate_pedido int auto_increment PRIMARY KEY,
+	quantidade int,
+	fk_id_pedido INTEGER,
+	fk_id_chocolate VARCHAR(100),
+	CONSTRAINT fk_id_pedido
+      FOREIGN KEY(fk_id_pedido) 
+	  REFERENCES PEDIDO(id_pedido) ON DELETE CASCADE,
+	CONSTRAINT fk_id_chocolate
+      FOREIGN KEY(fk_id_chocolate) 
+	  REFERENCES CHOCOLATE(id_chocolate) ON DELETE CASCADE
+);
+insert into CLIENTES(cpf,nome,telefone,endereco,end_instagram,end_facebook,cartaoDeCredito) values('123.123.12-12','Pedro','920009702','Oscarina','pedroo','ped','70770070');
+insert into CLIENTES(cpf,nome,telefone,endereco,end_instagram,end_facebook,cartaoDeCredito) values('321.321.32-32','Lucas','997022000','Castro','lucass','luc','60660060');
+
+insert into CHOCOLATE(id_chocolate,peso,valorPorKg,tipoDoChocolate,valorDeVenda,temperaturaIdeal,qtdeDeLeite) values ('34123',123142,30,'lacta',40,25,2);
+select * from CHOCOLATE_PEDIDO

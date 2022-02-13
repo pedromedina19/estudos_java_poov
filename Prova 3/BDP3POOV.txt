@@ -1,0 +1,35 @@
+create database p3poov;
+
+use p3poov;
+
+
+create table Cliente(
+	cpf varchar(15),
+    nome varchar(80),
+    endereco varchar(150),
+    email varchar(100),
+    telefone varchar(20),
+    
+    primary key(cpf)
+);
+
+create table Caminhao(
+	CodCaminhao int auto_increment,
+    Modelo varchar(50),
+    Potencia float,
+    
+    primary key(CodCaminhao)
+);
+
+create table Venda(
+	CodVenda int auto_increment,
+    FK_CPF varchar(15),
+    FK_CodCaminhao int,
+    Data date,
+    valor float,
+    
+    primary key(CodVenda),
+    foreign key(FK_CPF) references Cliente(cpf) ON DELETE CASCADE,
+    foreign key(FK_CodCaminhao) references Caminhao(CodCaminhao) ON DELETE CASCADE,
+    check(valor>0)
+);
